@@ -22,7 +22,7 @@ const Card = ({ image, name, description, tags, rating, time }) => {
         <p className="text-[14px] text-[#57595B]">{description}</p>
         <div className="flex items-center gap-2 mt-4 flex-wrap">
           {tags.map((tag) => {
-            return <p className="bg-[#F4F0E4] p-2 rounded-2xl text-[13px] ">{tag}</p>;
+            return <p key={tag} className="bg-[#F4F0E4] p-2 rounded-2xl text-[13px] ">{tag}</p>;
           })}
         </div>
 

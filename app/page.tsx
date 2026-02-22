@@ -2,6 +2,9 @@ import Header from "./components/header"
 import Hero from "./components/hero"
 import PopularDestinations from "./components/PopularDestinations"
 import Services from "./components/Services"
+import PlanTrip from './components/PlanTrip'
+import Registration from './components/registration'
+import Footer from './components/contact'
 
 export default function Home() {
   return (
@@ -12,6 +15,9 @@ export default function Home() {
         <Hero />
         <PopularDestinations />
         <Services />
+        <PlanTrip />
+        <Registration />
+        <Footer />
       </main>
     </div>
   )

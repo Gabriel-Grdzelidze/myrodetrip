@@ -41,7 +41,7 @@ const PopularDestinations = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center gap-6 py-20   text-center mb-50 bg-[#f1f1f1]">
+    <div id="PopularDestinations" className="flex flex-col justify-center items-center gap-6 py-20   text-center bg-[#EEEEEE]">
       <div>
         <h4 className="text-[#0AC4E0] text-center "><span className="bg-[#0AC4E0]/10 px-5 py-2 rounded-2xl">Popular Destinations</span></h4>
 

@@ -20,8 +20,8 @@ const Header = () => {
 
       <div>
         <ul className="flex items-center gap-8 text-sm font-medium">
-          <li><a className="text-[#57595B] text-[17px] font-semibold hover:text-black transition" href="">Destinations</a></li>
-          <li><a className="text-[#57595B] text-[17px] font-semibold hover:text-black transition" href="">Services</a></li>
+          <li><a className="text-[#57595B] text-[17px] font-semibold hover:text-black transition" href="#PopularDestinations">Destinations</a></li>
+          <li><a className="text-[#57595B] text-[17px] font-semibold hover:text-black transition" href="#Services">Services</a></li>
           <li><a className="text-[#57595B] text-[17px] font-semibold hover:text-black transition" href="">How It Works</a></li>
           <li><a className="text-[#57595B] text-[17px] font-semibold hover:text-black transition" href="">Contact</a></li>
         </ul>
