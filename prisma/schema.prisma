@@ -1,16 +1,15 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
-
 datasource db {
   provider = "mongodb"
 }
 
-model trip {
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Trip {
   id                String @id @default(auto()) @map("_id") @db.ObjectId
   TotalParticipants Int
   Destination       String
   Menu              String
-  Cost              Int
+  Cost              Float
 }
