@@ -23,3 +23,23 @@ export const GET_TRIP = gql`
     }
   }
 `;
+
+export const GET_DESTINATIONS = gql`
+  query GetDestinations {
+    getDestinations {
+      id
+      name
+      price
+    }
+  }
+`;
+
+export const GET_MENUS = gql`
+  query GetMenus {
+    getMenus {
+      id
+      name
+      price
+    }
+  }
+`;

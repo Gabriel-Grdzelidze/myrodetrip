@@ -15,12 +15,11 @@
     "@as-integrations/next": "^4.1.0",
     "@heroicons/react": "^2.2.0",
     "@prisma/adapter-pg": "^7.4.1",
-    "@prisma/client": "6.19",
     "link": "^2.1.2",
     "lucide-react": "^0.564.0",
+    "mongoose": "^9.2.2",
     "next": "15.5.12",
     "pg": "^8.18.0",
-    "prisma": "6.19",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "usestate": "^1.1.3"

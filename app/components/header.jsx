@@ -28,7 +28,7 @@ const Header = () => {
       </div>
       
       <div>
-        <Button  text={"Plan Your Trip"}/>
+        <Button href={"/addTrip"} text={"Plan Your Trip"}/>
       </div>
     </div>
   );

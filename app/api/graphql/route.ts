@@ -5,6 +5,9 @@ import { NextRequest } from 'next/server';
 
 import { typeDefs } from '../../../graphql/typedefs'; 
 import { resolvers } from '../../../graphql/resolvers'; 
+import { connectDB } from '../../../lib/db';
+
+await connectDB();
 
 const server = new ApolloServer({
   typeDefs,

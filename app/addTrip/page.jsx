@@ -1,7 +1,9 @@
+import Registration from './registration'
+
 const test = ()=>{
     return(
         <div>
-            hello world
+            <Registration />
         </div>
     )
 }

@@ -1,6 +1,9 @@
 'use client'
 import { useState } from "react";
 import { Users, GraduationCap, UserCheck, MapPin, Utensils, Calendar } from "lucide-react";
+import { SuccessMessage, ErrorMessage } from '../components/ui/message'
+import { useMutation } from "@apollo/client/react";
+import { CREATE_TRIP } from "@/graphql/mutations";
 
 const RegistrationPreview = () => {
   const [students, setStudents] = useState(25);
@@ -8,6 +11,7 @@ const RegistrationPreview = () => {
   const [teachers, setTeachers] = useState(2);
   const [destination, setDestination] = useState("sataflia");
   const [menu, setMenu] = useState("traditional");
+  const [status, setStatus] = useState("idle");
 
   const destinations = [
     { id: "sataflia", name: "Sataflia", price: 15 },
@@ -26,10 +30,16 @@ const RegistrationPreview = () => {
   const totalPeople = students + parents + teachers;
   const selectedDestination = destinations.find(d => d.id === destination);
   const selectedMenu = menus.find(m => m.id === menu);
-  
+
   const transportCost = totalPeople * (selectedDestination?.price || 0);
   const foodCost = totalPeople * (selectedMenu?.price || 0);
   const totalCost = transportCost + foodCost;
+
+  const [addTrip, { loading }] = useMutation(CREATE_TRIP, {
+    variables: { TotalParticipants: totalPeople, Destination: destination, Menu: menu, Cost: totalCost },
+    onCompleted: () => setStatus("success"),
+    onError: () => setStatus("error"),
+  });
 
   return (
     <section id="contact" className="py-20 lg:py-32 bg-background">
@@ -108,7 +118,7 @@ const RegistrationPreview = () => {
             </div>
           </div>
 
-          {/* Right Side: Trip Summary (Restored Image Style) */}
+          {/* Right Side */}
           <div className="bg-[#1a94b8] bg-linear-to-b from-[#1a94b8] to-[#3ab5d8] rounded-3xl p-8 text-white flex flex-col shadow-xl">
             <div className="flex items-center gap-3 mb-10">
               <Calendar className="w-6 h-6" />
@@ -146,11 +156,22 @@ const RegistrationPreview = () => {
               <p className="text-[12px] opacity-70 mt-2 relative z-10">*Final price may vary based on specific requirements</p>
             </div>
 
-            <button className="w-full bg-white text-[#1a94b8] py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:bg-gray-50 hover:scale-[1.01] active:scale-[0.99]">
-              Request Detailed Quote
+            <button
+              onClick={() => {
+                setStatus("idle");
+                addTrip();
+              }}
+              disabled={loading}
+              className="w-full bg-white text-[#1a94b8] py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:bg-gray-50 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? "Adding Trip..." : "Add to Schedule"}
             </button>
           </div>
         </div>
+
+        {status === "success" && <SuccessMessage message="Trip has been added successfully!" />}
+        {status === "error" && <ErrorMessage message="Failed to add trip. Please try again." />}
+
       </div>
     </section>
   );
