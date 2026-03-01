@@ -57,3 +57,39 @@ export const DELETE_MENU = gql`
     }
   }
 `;
+
+export const SIGN_UP_USER = gql`
+  mutation SignUpUser($name: String!, $idNumber: String!, $email: String!, $password: String!) {
+    signUpUser(name: $name, idNumber: $idNumber, email: $email, password: $password) {
+      token
+      role
+    }
+  }
+`;
+
+export const SIGN_UP_DRIVER = gql`
+  mutation SignUpDriver($name: String!, $idNumber: String!, $email: String!, $phone: String!, $password: String!) {
+    signUpDriver(name: $name, idNumber: $idNumber, email: $email, phone: $phone, password: $password) {
+      token
+      role
+    }
+  }
+`;
+
+export const SIGN_IN_USER = gql`
+  mutation SignInUser($email: String!, $password: String!) {
+    signInUser(email: $email, password: $password) {
+      token
+      role
+    }
+  }
+`;
+
+export const SIGN_IN_DRIVER = gql`
+  mutation SignInDriver($email: String!, $password: String!) {
+    signInDriver(email: $email, password: $password) {
+      token
+      role
+    }
+  }
+`;

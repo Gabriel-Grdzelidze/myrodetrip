@@ -19,6 +19,26 @@ export const typeDefs = `#graphql
     price: Int!
   }
 
+  type User {
+    id: ID!
+    name: String!
+    idNumber: String!
+    email: String!
+  }
+
+  type Driver {
+    id: ID!
+    name: String!
+    idNumber: String!
+    email: String!
+    phone: String!
+  }
+
+  type AuthPayload {
+    token: String!
+    role: String!
+  }
+
   type Query {
     getTrips: [Trip]
     getTrip(id: ID!): Trip
@@ -49,5 +69,10 @@ export const typeDefs = `#graphql
 
     addMenu(name: String!, price: Int!): Menu
     deleteMenu(id: ID!): Menu
+
+    signUpUser(name: String!, idNumber: String!, email: String!, password: String!): AuthPayload!
+    signUpDriver(name: String!, idNumber: String!, email: String!, phone: String!, password: String!): AuthPayload!
+    signInUser(email: String!, password: String!): AuthPayload!
+    signInDriver(email: String!, password: String!): AuthPayload!
   }
 `;

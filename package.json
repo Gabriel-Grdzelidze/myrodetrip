@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-   "dev":   "node server.js",
-  "build": "next build",
-  "start": "NODE_ENV=production node server.js",
-  "lint":  "eslint",
-  "postinstall": "prisma generate"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "lint": "eslint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@apollo/client": "^4.1.5",
     "@apollo/server": "^5.4.0",
     "@as-integrations/next": "^4.1.0",
     "@heroicons/react": "^2.2.0",
+    "jsonwebtoken": "^9.0.3",
     "link": "^2.1.2",
     "lucide-react": "^0.564.0",
     "mongoose": "^9.2.2",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.0.0",
     "@types/pg": "^8.16.0",
     "@types/react": "^19.0.0",

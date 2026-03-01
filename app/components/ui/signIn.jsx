@@ -2,20 +2,22 @@
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
-export default function SignIn({ onSwitch }) {
+export default function SignIn({ role, onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Sign in:", { email, password });
+    console.log(`Sign in as ${role}:`, { email, password });
   };
 
   return (
     <div className="w-full max-w-md">
       <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h2>
-      <p className="text-gray-500 mb-8">Sign in to your account to continue</p>
+      <p className="text-gray-500 mb-8">
+        Sign in as <span className="text-[#1a94b8] font-semibold capitalize">{role}</span>
+      </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -59,7 +61,7 @@ export default function SignIn({ onSwitch }) {
           type="submit"
           className="w-full bg-[#1a94b8] hover:bg-[#1580a0] text-white py-3 rounded-2xl font-bold text-sm transition hover:scale-[1.01] active:scale-[0.99]"
         >
-          Sign In
+          Sign In as {role.charAt(0).toUpperCase() + role.slice(1)}
         </button>
       </form>
 
