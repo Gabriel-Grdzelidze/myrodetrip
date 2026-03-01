@@ -1,35 +1,42 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Users, GraduationCap, UserCheck, MapPin, Utensils, Calendar } from "lucide-react";
 import { SuccessMessage, ErrorMessage } from '../components/ui/message'
 import { useMutation } from "@apollo/client/react";
 import { CREATE_TRIP } from "@/graphql/mutations";
+import { useQuery } from "@apollo/client/react";
+import { GET_DESTINATIONS, GET_MENUS } from "../../graphql/query";
+import GridSkeleton from "../components/ui/GridSkeleton";
 
 const RegistrationPreview = () => {
   const [students, setStudents] = useState(25);
   const [parents, setParents] = useState(5);
   const [teachers, setTeachers] = useState(2);
-  const [destination, setDestination] = useState("sataflia");
-  const [menu, setMenu] = useState("traditional");
+  const [destination, setDestination] = useState("");
+  const [menu, setMenu] = useState("");
   const [status, setStatus] = useState("idle");
 
-  const destinations = [
-    { id: "sataflia", name: "Sataflia", price: 15 },
-    { id: "gelati", name: "Gelati Monastery", price: 12 },
-    { id: "signagi", name: "Signagi", price: 20 },
-    { id: "motsameta", name: "Motsameta", price: 10 },
-  ];
+  const [destinationArr, setDestinationArr] = useState([])
+  const [menuArr, setMenuArr] = useState([])
 
-  const menus = [
-    { id: "traditional", name: "Georgian Traditional", price: 8 },
-    { id: "international", name: "International Kids", price: 10 },
-    { id: "healthy", name: "Healthy Choice", price: 12 },
-    { id: "vegetarian", name: "Vegetarian", price: 9 },
-  ];
+  const { data, loading: destLoading } = useQuery(GET_DESTINATIONS)
+  const { data: menuData, loading: menuLoading } = useQuery(GET_MENUS)
+
+  useEffect(() => {
+    if (data?.getDestinations) {
+      setDestinationArr(data.getDestinations);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (menuData?.getMenus) {
+      setMenuArr(menuData.getMenus);
+    }
+  }, [menuData]);
 
   const totalPeople = students + parents + teachers;
-  const selectedDestination = destinations.find(d => d.id === destination);
-  const selectedMenu = menus.find(m => m.id === menu);
+  const selectedDestination = destinationArr.find(d => d.id === destination);
+  const selectedMenu = menuArr.find(m => m.id === menu);
 
   const transportCost = totalPeople * (selectedDestination?.price || 0);
   const foodCost = totalPeople * (selectedMenu?.price || 0);
@@ -85,36 +92,40 @@ const RegistrationPreview = () => {
               <label className="flex items-center gap-2 text-sm font-bold text-gray-500 mb-4 uppercase tracking-wider">
                 <MapPin className="w-4 h-4" /> Destination
               </label>
-              <div className="grid grid-cols-2 gap-3">
-                {destinations.map((dest) => (
-                  <button
-                    key={dest.id}
-                    onClick={() => setDestination(dest.id)}
-                    className={`p-4 rounded-2xl border-2 text-left transition-all ${destination === dest.id ? "border-teal-500 bg-teal-50/30" : "border-gray-100 hover:border-teal-200"}`}
-                  >
-                    <span className="font-bold text-gray-800 block">{dest.name}</span>
-                    <span className="text-sm text-gray-500">₾{dest.price}/person</span>
-                  </button>
-                ))}
-              </div>
+              {destLoading ? <GridSkeleton count={4} /> : (
+                <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto pr-1">
+                  {destinationArr.map((dest) => (
+                    <button
+                      key={dest.id}
+                      onClick={() => setDestination(dest.id)}
+                      className={`p-4 rounded-2xl border-2 text-left transition-all ${destination === dest.id ? "border-teal-500 bg-teal-50/30" : "border-gray-100 hover:border-teal-200"}`}
+                    >
+                      <span className="font-bold text-gray-800 block">{dest.name}</span>
+                      <span className="text-sm text-gray-500">₾{dest.price}/person</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>
               <label className="flex items-center gap-2 text-sm font-bold text-gray-500 mb-4 uppercase tracking-wider">
                 <Utensils className="w-4 h-4" /> Food Menu
               </label>
-              <div className="grid grid-cols-2 gap-3">
-                {menus.map((m) => (
-                  <button
-                    key={m.id}
-                    onClick={() => setMenu(m.id)}
-                    className={`p-4 rounded-2xl border-2 text-left transition-all ${menu === m.id ? "border-orange-400 bg-orange-50/30" : "border-gray-100 hover:border-orange-200"}`}
-                  >
-                    <span className="font-bold text-gray-800 block">{m.name}</span>
-                    <span className="text-sm text-gray-500">₾{m.price}/person</span>
-                  </button>
-                ))}
-              </div>
+              {menuLoading ? <GridSkeleton count={4} /> : (
+                <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto pr-1">
+                  {menuArr.map((m) => (
+                    <button
+                      key={m.id}
+                      onClick={() => setMenu(m.id)}
+                      className={`p-4 rounded-2xl border-2 text-left transition-all ${menu === m.id ? "border-orange-400 bg-orange-50/30" : "border-gray-100 hover:border-orange-200"}`}
+                    >
+                      <span className="font-bold text-gray-800 block">{m.name}</span>
+                      <span className="text-sm text-gray-500">₾{m.price}/person</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -132,11 +143,11 @@ const RegistrationPreview = () => {
               </div>
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="opacity-90">Destination</span>
-                <span className="font-medium">{selectedDestination?.name}</span>
+                <span className="font-medium">{selectedDestination?.name || "Not selected"}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="opacity-90">Menu Selection</span>
-                <span className="font-medium">{selectedMenu?.name}</span>
+                <span className="font-medium">{selectedMenu?.name || "Not selected"}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="opacity-90">Transport Cost</span>
@@ -161,7 +172,7 @@ const RegistrationPreview = () => {
                 setStatus("idle");
                 addTrip();
               }}
-              disabled={loading}
+              disabled={loading || !destination || !menu}
               className="w-full bg-white text-[#1a94b8] py-5 rounded-2xl font-bold text-lg shadow-lg transition-all hover:bg-gray-50 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? "Adding Trip..." : "Add to Schedule"}

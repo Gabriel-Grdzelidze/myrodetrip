@@ -51,7 +51,7 @@ const Hero = () => {
               style={{ animation: "pulseShadow 2s infinite ease-in-out" }}
               className="text-[15px] mt-7 text-[#f1f1f1] rounded-2xl bg-linear-to-br from-[#FF7F11] to-[#F2B50B] py-2.5 px-8 cursor-pointer tracking-normal font-bold hover:scale-105 transition flex items-center"
             >
-              Start Planing Now
+              <a href="/addTrip">Start Planing Now</a>
               <ArrowRight size={18} color="#fff" className="ml-2" />
             </button>
           </>
