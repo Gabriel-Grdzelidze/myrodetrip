@@ -1,4 +1,6 @@
+'use client'; 
 import { Bus, Utensils, Users, Dot, ArrowRight , MapPin } from "lucide-react";
+
 
 const Hero = () => {
   const stats = [
@@ -6,7 +8,7 @@ const Hero = () => {
     { icon: Users, number: "10k+", label: "Happy Students" },
     { icon: Utensils, number: "100+", label: "Menu Options" },
   ];
-
+ 
   return (
     <div className="relative w-full min-h-screen flex flex-col items-center justify-center ">
       <div className="absolute inset-0 -z-10">

@@ -75,7 +75,7 @@ const PopularDestinations = () => {
         })}
       </div>
 
-      <button className="w-[15%] p-2 border cursor-pointer bg-[#0D1A63] text-[#f1f1f1] font-bold rounded-2xl  mt-10 hover:bg-[#0D1A63]/90 transition duration-300  ">View All Destinations</button>
+      <button className="w-[15%] p-2 border cursor-pointer bg-[#0D1A63] text-[#f1f1f1] font-bold rounded-2xl  mt-10 hover:bg-[#0D1A63]/90 transition duration-300"><a href="/allTrips">View All Destinations</a></button>
     </div>
   );
 };

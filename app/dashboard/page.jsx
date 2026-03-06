@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import AllTrips from "./allTrips";
 import Destinations from "./destinations";
 import Menu from "./menu";
+import Users from "./users";
 
 export default function Admin() {
   const [activePage, setActivePage] = useState("dashboard");
@@ -16,6 +17,8 @@ export default function Admin() {
         return <Destinations />;
       case "menu":
         return <Menu />;
+      case "users":
+        return <Users />;
       default:
         return <Dashboard />;
     }
@@ -55,6 +58,13 @@ export default function Admin() {
             className="block text-left w-full hover:text-blue-400"
           >
             Menu
+          </button>
+
+          <button
+            onClick={() => setActivePage("users")}
+            className="block text-left w-full hover:text-blue-400"
+          >
+            Users
           </button>
         </nav>
       </aside>

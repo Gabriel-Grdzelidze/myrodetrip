@@ -1,15 +1,20 @@
 'use client'
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function SignIn({ role, onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  
+
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Sign in as ${role}:`, { email, password });
+    const providerId = role === "driver" ? "driver-login" : "user-login";
+     await signIn(providerId, { email, password, callbackUrl: "/" });
+    console.log(role, email, password); 
   };
 
   return (

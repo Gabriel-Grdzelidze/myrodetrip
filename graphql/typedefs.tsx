@@ -39,11 +39,40 @@ export const typeDefs = `#graphql
     role: String!
   }
 
+  type Booking {
+    id: ID!
+    offerId: ID!
+    userId: ID!
+    userName: String!
+    userEmail: String!
+    status: String!
+    createdAt: String!
+    offer: DriverOffer
+  }
+
+  type DriverOffer {
+    id: ID!
+    driverId: ID!
+    driverName: String!
+    destinations: [String!]!
+    seats: Int!
+    price: Int!
+    description: String!
+    createdAt: String!
+    bookings: [Booking]
+  }
+
   type Query {
     getTrips: [Trip]
     getTrip(id: ID!): Trip
     getDestinations: [Destination]
     getMenus: [Menu]
+    getUsers(search: String): [User!]!
+    getDrivers(search: String): [Driver!]!
+    getDriverOffers: [DriverOffer!]!
+    getMyOffers(driverId: ID!): [DriverOffer!]!
+    getMyBookings(userId: ID!): [Booking!]!
+    getDriverRequests(driverId: ID!): [Booking!]!
   }
 
   type Mutation {
@@ -74,5 +103,29 @@ export const typeDefs = `#graphql
     signUpDriver(name: String!, idNumber: String!, email: String!, phone: String!, password: String!): AuthPayload!
     signInUser(email: String!, password: String!): AuthPayload!
     signInDriver(email: String!, password: String!): AuthPayload!
+
+    deleteUser(id: ID!): User
+    deleteDriver(id: ID!): Driver
+
+    createDriverOffer(
+      driverId: ID!
+      destinations: [String!]!
+      seats: Int!
+      price: Int!
+      description: String!
+    ): DriverOffer!
+
+    bookTrip(
+      offerId: ID!
+      userId: ID!
+      userName: String!
+      userEmail: String!
+    ): Booking!
+
+    deleteDriverOffer(id: ID!): DriverOffer
+    updateDriverOffer(id: ID!, destinations: [String!], seats: Int, price: Int, description: String): DriverOffer
+
+    confirmBooking(bookingId: ID!): Booking!
+    declineBooking(bookingId: ID!): Booking!
   }
 `;

@@ -1,16 +1,18 @@
 import { gql } from '@apollo/client';
 
+// ─── existing mutations (unchanged) ─────────────────────────────────────────
+
 export const CREATE_TRIP = gql`
   mutation CreateTrip(
-    $TotalParticipants: Int!, 
-    $Destination: String!, 
-    $Menu: String!, 
+    $TotalParticipants: Int!,
+    $Destination: String!,
+    $Menu: String!,
     $Cost: Int!
   ) {
     createTrip(
-      TotalParticipants: $TotalParticipants, 
-      Destination: $Destination, 
-      Menu: $Menu, 
+      TotalParticipants: $TotalParticipants,
+      Destination: $Destination,
+      Menu: $Menu,
       Cost: $Cost
     ) {
       id
@@ -90,6 +92,91 @@ export const SIGN_IN_DRIVER = gql`
     signInDriver(email: $email, password: $password) {
       token
       role
+    }
+  }
+`;
+
+export const DELETE_USER = gql`
+  mutation DeleteUser($id: ID!) {
+    deleteUser(id: $id) {
+      id
+    }
+  }
+`;
+
+export const DELETE_DRIVER = gql`
+  mutation DeleteDriver($id: ID!) {
+    deleteDriver(id: $id) {
+      id
+    }
+  }
+`;
+
+export const CREATE_DRIVER_OFFER = gql`
+  mutation CreateDriverOffer(
+    $driverId: ID!
+    $destinations: [String!]!
+    $seats: Int!
+    $price: Int!
+    $description: String!
+  ) {
+    createDriverOffer(
+      driverId: $driverId
+      destinations: $destinations
+      seats: $seats
+      price: $price
+      description: $description
+    ) {
+      id
+      destinations
+      seats
+      price
+      description
+    }
+  }
+`;
+
+export const BOOK_TRIP = gql`
+  mutation BookTrip($offerId: ID!, $userId: ID!, $userName: String!, $userEmail: String!) {
+    bookTrip(offerId: $offerId, userId: $userId, userName: $userName, userEmail: $userEmail) {
+      id
+      userName
+      userEmail
+      status
+    }
+  }
+`;
+
+export const DELETE_DRIVER_OFFER = gql`
+  mutation DeleteDriverOffer($id: ID!) {
+    deleteDriverOffer(id: $id) { id }
+  }
+`;
+
+export const UPDATE_DRIVER_OFFER = gql`
+  mutation UpdateDriverOffer($id: ID!, $destinations: [String!], $seats: Int, $price: Int, $description: String) {
+    updateDriverOffer(id: $id, destinations: $destinations, seats: $seats, price: $price, description: $description) {
+      id destinations seats price description
+    }
+  }
+`;
+
+// ─── new: confirm / decline a booking ───────────────────────────────────────
+
+export const CONFIRM_BOOKING = gql`
+  mutation ConfirmBooking($bookingId: ID!) {
+    confirmBooking(bookingId: $bookingId) {
+      id
+      status
+    }
+  }
+`;
+
+export const DECLINE_BOOKING = gql`
+  mutation DeclineBooking($bookingId: ID!) {
+    declineBooking(bookingId: $bookingId) {
+      id
+      status
     }
   }
 `;
