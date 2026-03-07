@@ -62,6 +62,19 @@ export const typeDefs = `#graphql
     bookings: [Booking]
   }
 
+  type Admin {
+    id: ID!
+    name: String!
+    email: String!
+    createdAt: String!
+  }
+
+  type AdminPayload {
+    success: Boolean!
+    message: String!
+    admin: Admin
+  }
+
   type Query {
     getTrips: [Trip]
     getTrip(id: ID!): Trip
@@ -73,59 +86,30 @@ export const typeDefs = `#graphql
     getMyOffers(driverId: ID!): [DriverOffer!]!
     getMyBookings(userId: ID!): [Booking!]!
     getDriverRequests(driverId: ID!): [Booking!]!
+    getAdmins: [Admin!]!
   }
 
   type Mutation {
-    createTrip(
-      TotalParticipants: Int!
-      Destination: String!
-      Menu: String!
-      Cost: Int!
-    ): Trip
-
-    updateTrip(
-      id: ID!
-      TotalParticipants: Int
-      Destination: String
-      Menu: String
-      Cost: Int
-    ): Trip
-
+    createTrip(TotalParticipants: Int!, Destination: String!, Menu: String!, Cost: Int!): Trip
+    updateTrip(id: ID!, TotalParticipants: Int, Destination: String, Menu: String, Cost: Int): Trip
     deleteTrip(id: ID!): Trip
-
     addDestination(name: String!, price: Int!): Destination
     deleteDestination(id: ID!): Destination
-
     addMenu(name: String!, price: Int!): Menu
     deleteMenu(id: ID!): Menu
-
     signUpUser(name: String!, idNumber: String!, email: String!, password: String!): AuthPayload!
     signUpDriver(name: String!, idNumber: String!, email: String!, phone: String!, password: String!): AuthPayload!
     signInUser(email: String!, password: String!): AuthPayload!
     signInDriver(email: String!, password: String!): AuthPayload!
-
     deleteUser(id: ID!): User
     deleteDriver(id: ID!): Driver
-
-    createDriverOffer(
-      driverId: ID!
-      destinations: [String!]!
-      seats: Int!
-      price: Int!
-      description: String!
-    ): DriverOffer!
-
-    bookTrip(
-      offerId: ID!
-      userId: ID!
-      userName: String!
-      userEmail: String!
-    ): Booking!
-
+    createDriverOffer(driverId: ID!, destinations: [String!]!, seats: Int!, price: Int!, description: String!): DriverOffer!
+    bookTrip(offerId: ID!, userId: ID!, userName: String!, userEmail: String!): Booking!
     deleteDriverOffer(id: ID!): DriverOffer
     updateDriverOffer(id: ID!, destinations: [String!], seats: Int, price: Int, description: String): DriverOffer
-
     confirmBooking(bookingId: ID!): Booking!
     declineBooking(bookingId: ID!): Booking!
+    addAdmin(name: String!, email: String!, password: String!): AdminPayload!
+    removeAdmin(email: String!): AdminPayload!
   }
 `;

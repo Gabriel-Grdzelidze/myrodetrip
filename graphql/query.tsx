@@ -1,7 +1,5 @@
 import { gql } from '@apollo/client';
 
-// ─── existing queries (unchanged) ───────────────────────────────────────────
-
 export const GET_TRIPS = gql`
   query GetTrips {
     getTrips {
@@ -124,8 +122,6 @@ export const GET_MY_BOOKINGS = gql`
   }
 `;
 
-// ─── new: fetch all booking requests for a driver ───────────────────────────
-
 export const GET_DRIVER_REQUESTS = gql`
   query GetDriverRequests($driverId: ID!) {
     getDriverRequests(driverId: $driverId) {
@@ -141,6 +137,17 @@ export const GET_DRIVER_REQUESTS = gql`
         price
         description
       }
+    }
+  }
+`;
+
+export const GET_ADMINS = gql`
+  query GetAdmins {
+    getAdmins {
+      id
+      name
+      email
+      createdAt
     }
   }
 `;

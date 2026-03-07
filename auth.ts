@@ -6,6 +6,7 @@ import clientPromise from "@/lib/mongodb-client";
 import { connectDB } from "./lib/db";
 import User from "./lib/models/User";
 import Driver from "./lib/models/Driver";
+import Admin from "./lib/models/Admin";
 import jwt from 'jsonwebtoken';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -27,6 +28,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         await connectDB();
+
+        // 1️⃣ Check Admin collection first
+        const admin = await Admin.findOne({ email: credentials?.email });
+        if (admin && admin.password === credentials?.password) {
+          return {
+            id: admin._id.toString(),
+            name: admin.name,
+            email: admin.email,
+            role: "admin",
+          };
+        }
+
+        // 2️⃣ Fall through to regular users
         const user = await User.findOne({ email: credentials?.email });
         if (!user) return null;
         if (user.password !== credentials?.password) return null;

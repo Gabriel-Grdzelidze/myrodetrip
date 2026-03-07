@@ -31,7 +31,11 @@ const Header = () => {
     { label: "My Bookings", href: "/myBookings" },
   ];
 
-  const links = role === "driver" ? driverLinks : userLinks;
+  const adminLinks = [
+    { label: "Dashboard", href: "/dashboard" },
+  ];
+
+  const links = role === "driver" ? driverLinks : role === "admin" ? adminLinks : userLinks;
 
   return (
     <div className="bg-[#f1f1f1] h-20 w-full flex items-center justify-around px-10">
